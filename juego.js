@@ -69,9 +69,13 @@ formulario.addEventListener("submit", async (evento) => {
   const intencion = detectarIntencion(texto);
   let sentimiento, cambio, respuesta;
 
-  if (ia) {
+  if (ia && ia.sentimiento !== null) {
     sentimiento = ia.sentimiento;            // de -10 a 10
     cambio = sentimiento * 2.5;
+    respuesta = ia.respuesta;
+  } else if (ia) {                           // la IA habló, pero sin puntaje
+    sentimiento = analizarSentimiento(texto);
+    cambio = sentimiento * 6;
     respuesta = ia.respuesta;
   } else {
     sentimiento = analizarSentimiento(texto);
